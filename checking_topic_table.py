@@ -56,6 +56,24 @@ def check(hostname: str, user_name: str, user_password: str, database_name: str)
         );
         """
 
+        """
+        topic_id        话题ID（主键）
+        op_id        楼主ID
+        topic_header        话题标题
+        topic_content        话题内容
+        question_time        提问时间
+        number_of_clicks        点击数
+        number_of_replies        回复数
+        last_reply_time        最后回复时间
+        up_vote_topic        赞数
+        down_vote_topic        踩数
+        topic_category        主题
+        tag_1        标签1
+        tag_2        标签2
+        tag_3        标签3
+        tag_4        标签4
+        """
+
         # 创建表
         create_table(connection, create_topic_table)
 
