@@ -64,20 +64,20 @@ def get(topic_id: str, cookie: str):
         tags = soup.find_all('a', class_='tag')
         tags = [tag.get_text(strip=True) for tag in tags]
 
-        # # 打印提取的信息
-        # print(f'话题ID: {topic_id}')
-        # print(f'楼主ID: {op_id}')
-        # print(f'话题标题: {topic_header}')
-        # print(f'话题内容: {topic_content}')
-        # print(f'提问时间: {question_time}')
-        # print(f'点击数: {number_of_clicks}')
-        # print(f'回复数: {number_of_replies}')
-        # print(f'最后回复时间: {last_reply_time}')
-        # print(f'赞数: {up_vote_topic}')
-        # print(f'踩数: {down_vote_topic}')
-        # print(f'主题: {topic_category}')
-        # for i, tag in enumerate(tags, 1):
-        #     print(f'标签 {i}: {tag}')
+        # 打印提取的信息
+        print(f'话题ID: {topic_id}')
+        print(f'楼主ID: {op_id}')
+        print(f'话题标题: {topic_header}')
+        print(f'话题内容: {topic_content}')
+        print(f'提问时间: {question_time}')
+        print(f'点击数: {number_of_clicks}')
+        print(f'回复数: {number_of_replies}')
+        print(f'最后回复时间: {last_reply_time}')
+        print(f'赞数: {up_vote_topic}')
+        print(f'踩数: {down_vote_topic}')
+        print(f'主题: {topic_category}')
+        for i, tag in enumerate(tags, 1):
+            print(f'标签 {i}: {tag}')
 
         recording_topic.record(topic_id, op_id, topic_header, topic_content, question_time, number_of_clicks,
                                number_of_replies,
@@ -86,4 +86,4 @@ def get(topic_id: str, cookie: str):
 # # 调试
 # args = option.Parse()
 # config = settings.Read(args['config'])
-# get(1000863, config['cookie'])
+# get(1000964, config['cookie'])

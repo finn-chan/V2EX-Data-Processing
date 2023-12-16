@@ -7,7 +7,7 @@ def main():
     args = option.Parse()
     config = settings.Read(args['config'])
 
-    getting_topic_id.get(2, 3, config['cookie'])
+    getting_topic_id.get(1, 20, config['cookie'])
 
 
 if __name__ == '__main__':
