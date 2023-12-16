@@ -17,9 +17,9 @@ def create():
             passwd=config['user_password'],
             database=config['database_name']
         )
-        print("成功连接到 MySQL 数据库")
+        print('成功连接到 MySQL 数据库')
     except Error as e:
-        print(f"连接错误 '{e}'")
+        print(f'连接错误 \'{e}\'')
         return None
 
     return connection

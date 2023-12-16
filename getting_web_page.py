@@ -23,5 +23,5 @@ def get(url: str, cookie: str):
         response.raise_for_status()  # 确保请求成功
         return response.text
     except requests.RequestException as e:
-        print(f'请求错误: {e}')
+        print(f'{url} 请求错误: {e}')
         return None

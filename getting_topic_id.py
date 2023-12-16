@@ -26,8 +26,8 @@ def get(start_page: int, end_page: int, cookie: str):
         print(f'即将获取第{page + 1}内容')
         stochastic_waiting.sleep()
 
-    print(len(topic_ids))
+    print(f'获取了{len(topic_ids)}个 topic')
     for topic_id in topic_ids:
-        print(f'正在获取{topic_id}内容')
+        print(f'正在获取 topic:{topic_id}内容')
         getting_topic_information.get(topic_id, cookie)
         stochastic_waiting.sleep()

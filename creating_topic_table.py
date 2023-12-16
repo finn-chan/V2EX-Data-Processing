@@ -9,7 +9,7 @@ def create_table(connection: MySQLConnection, create_table_query: str):
         cursor.execute(create_table_query)
         print('表创建成功')
     except Error as e:
-        print(f"创建表时出现错误 '{e}'")
+        print(f'创建表时出现错误 \'{e}\'')
 
 
 def create(connection: MySQLConnection):
@@ -27,11 +27,11 @@ def create(connection: MySQLConnection):
                 last_reply_time DATETIME,
                 up_vote_topic INT,
                 down_vote_topic INT,
-                topic_category VARCHAR(10),
-                tag_1 VARCHAR(10),
-                tag_2 VARCHAR(10),
-                tag_3 VARCHAR(10),
-                tag_4 VARCHAR(10)
+                topic_category VARCHAR(20),
+                tag_1 VARCHAR(20),
+                tag_2 VARCHAR(20),
+                tag_3 VARCHAR(20),
+                tag_4 VARCHAR(20)
             );
             """
 

@@ -15,7 +15,7 @@ def sleep(mean=5, std_dev=2):
     wait_time = max(0, wait_time)
 
     # 打印等待时间，四舍五入到两位小数
-    print(f'耐心等待 {wait_time:.2f} 秒')
+    print(f'耐心等待{wait_time:.2f}秒')
 
     # 等待
     time.sleep(wait_time)
