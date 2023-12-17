@@ -4,7 +4,12 @@ from bs4 import BeautifulSoup
 import creating_connection
 import getting_topic_information
 import getting_web_page
+import option
+import settings
 import stochastic_waiting
+
+args = option.Parse()
+config = settings.Read(args['config'])
 
 
 def remove_duplicates(topic_ids):
@@ -33,12 +38,12 @@ def remove_duplicates(topic_ids):
     return topic_ids
 
 
-def get(start_page: int, end_page: int, cookie: str):
+def get(start_page: int, end_page: int):
     topic_ids = []
 
     for page in range(start_page, end_page + 1):
         page_url = f'https://v2ex.com/recent?p={page}'
-        page_content = getting_web_page.get(page_url, cookie)
+        page_content = getting_web_page.get(page_url, config['cookie'])
 
         if page_content:
             soup = BeautifulSoup(page_content, 'html.parser')
@@ -50,15 +55,16 @@ def get(start_page: int, end_page: int, cookie: str):
                     topic_id = href.split('/')[2].split('#')[0]
                     topic_ids.append(topic_id)
 
-        print(f'即将获取第{page + 1}页内容')
+        print(f'已获取第{page}页的内容')
         stochastic_waiting.sleep()
 
     # # 排除数据库中已存在的 topic
     # new_topic_ids = remove_duplicates(topic_ids)
+
     new_topic_ids = topic_ids
-    print(f'获取了{len(new_topic_ids)}个 topic')
+    print(f'获取了{len(new_topic_ids)}个 topics')
 
     for topic_id in new_topic_ids:
         print(f'正在获取 topic:{topic_id} 内容')
-        getting_topic_information.get(topic_id, cookie)
+        getting_topic_information.get(topic_id)
         stochastic_waiting.sleep()

@@ -14,9 +14,9 @@ def create_table(connection: MySQLConnection, create_table_query: str):
 
 def create(connection: MySQLConnection):
     if connection is not None:
-        if not checking_table_exists.check(connection, 'topic'):
+        if not checking_table_exists.check(connection, 'topics'):
             create_topic_table = """
-            CREATE TABLE topic (
+            CREATE TABLE topics (
                 topic_id INT PRIMARY KEY,
                 op_id VARCHAR(20),
                 topic_header TEXT,

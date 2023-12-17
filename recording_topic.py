@@ -3,7 +3,7 @@ import mysql.connector
 
 import checking_topic_id_exists
 import creating_connection
-import creating_topic_table
+import creating_table_topic
 
 
 def record(topic_id: str, op_id: str, topic_header: str, topic_content: str, question_time: str, number_of_clicks: str,
@@ -13,7 +13,7 @@ def record(topic_id: str, op_id: str, topic_header: str, topic_content: str, que
     connection = creating_connection.create()
 
     # 检查 topic 表是否存在
-    creating_topic_table.create(connection)
+    creating_table_topic.create(connection)
 
     try:
         cursor = connection.cursor()
@@ -21,7 +21,7 @@ def record(topic_id: str, op_id: str, topic_header: str, topic_content: str, que
         if checking_topic_id_exists.check(connection, topic_id):
             # 准备 SQL 更新语句
             update_query = """
-                UPDATE topic
+                UPDATE topics
                 SET op_id = %s, topic_header = %s, topic_content = %s, question_time = %s, number_of_clicks = %s, number_of_replies = %s, last_reply_time = %s, up_vote_topic = %s, down_vote_topic = %s, topic_category = %s, tag_1 = %s, tag_2 = %s, tag_3 = %s, tag_4 = %s
                 WHERE topic_id = %s
                 """
@@ -34,7 +34,7 @@ def record(topic_id: str, op_id: str, topic_header: str, topic_content: str, que
         else:
             # 准备 SQL 插入语句
             insert_query = """
-                INSERT INTO topic (topic_id, op_id, topic_header, topic_content, question_time, number_of_clicks, number_of_replies, last_reply_time, up_vote_topic, down_vote_topic, topic_category, tag_1, tag_2, tag_3, tag_4)
+                INSERT INTO topics (topic_id, op_id, topic_header, topic_content, question_time, number_of_clicks, number_of_replies, last_reply_time, up_vote_topic, down_vote_topic, topic_category, tag_1, tag_2, tag_3, tag_4)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
             data = (

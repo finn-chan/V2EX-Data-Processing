@@ -1,13 +1,8 @@
 import getting_topic_id
-import option
-import settings
 
 
 def main():
-    args = option.Parse()
-    config = settings.Read(args['config'])
-
-    getting_topic_id.get(1, 20, config['cookie'])
+    getting_topic_id.get(1, 1)
 
 
 if __name__ == '__main__':
