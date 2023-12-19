@@ -54,6 +54,12 @@ def get(topic_id: str):
         else:
             # 存在回复时，提取回复数和最后回复时间
             number_of_replies = soup.find('span', class_='gray').text.split(' ')[0]
+            # 如果回复数非数值，则赋值-1
+            if not isinstance(number_of_replies, (int, float)):
+                try:
+                    number_of_replies = int(number_of_replies)
+                except ValueError:
+                    number_of_replies = -1
             last_reply_time = soup.find_all('span', class_='ago')[-1].get('title')
             last_reply_time = convert_to_mysql_datetime(last_reply_time)
 
@@ -111,5 +117,6 @@ def get(topic_id: str):
         session.merge(new_topic)
         session.commit()
 
+
 # 调试
-# get(1000964, config['cookie'])
+get('1001187')

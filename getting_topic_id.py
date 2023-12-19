@@ -64,7 +64,7 @@ def get(start_page: int, end_page: int):
     new_topic_ids = topic_ids
     print(f'获取了{len(new_topic_ids)}个 topics')
 
-    for topic_id in new_topic_ids:
-        print(f'正在获取 topic:{topic_id} 内容')
+    for index, topic_id in enumerate(new_topic_ids, start=1):
+        print(f'正在获取 topic:{topic_id} 内容 ({index}/{len(new_topic_ids)})')
         getting_topic_information.get(topic_id)
         stochastic_waiting.sleep()

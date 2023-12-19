@@ -2,7 +2,7 @@ import time
 import random
 
 
-def sleep(mean=5, std_dev=2):
+def sleep(mean=8, std_dev=4):
     """
     生成一个随机等待时间，基于正态分布。
     mean: 平均等待时间
