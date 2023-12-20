@@ -1,9 +1,9 @@
 import mysql
 import mysql.connector
 
-import checking_topic_id_exists
-import creating_connection
-import creating_table_topic
+from crawl import checking_topic_id_exists
+from crawl import creating_connection
+from crawl import creating_table_topic
 
 
 def record(topic_id: str, op_id: str, topic_header: str, topic_content: str, question_time: str, number_of_clicks: str,

@@ -3,9 +3,9 @@ from mysql.connector import Error
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import defining_items
 import option
 import settings
+from crawl import defining_items
 
 args = option.Parse()
 config = settings.Read(args['config'])

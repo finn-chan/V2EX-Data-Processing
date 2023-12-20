@@ -1,7 +1,7 @@
 {
-  "hostname": "localhost",
+  "host_name": "localhost",
   "user_name": "root",
   "user_password": "vg2D7c#%eY9#!f&T",
   "database_name": "v2ex_data",
-  "cookie": ""
+  "cookie": "PB3_SESSION=\"2|1:0|10:1703038932|11:PB3_SESSION|40:djJleDoxNDYuNTYuMTQ5LjEyODoyNzAxMzAzNA==|c5e430b498c0ce8d356239d4e91e7aa0252bc37d754fbab2a00e849d1ef8610c\"; cf_clearance=2sHvAA2E42lweLKu6hAw_Q2YbzGbvc05Lu0lPxHh5Fo-1703131839-0-2-262af5e5.7492c443.712baa05-150.0.0"
 }

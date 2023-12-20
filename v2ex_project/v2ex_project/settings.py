@@ -14,7 +14,7 @@ BOT_NAME = "v2ex_project"
 SPIDER_MODULES = ["v2ex_project.spiders"]
 NEWSPIDER_MODULE = "v2ex_project.spiders"
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
+# crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = "v2ex_project (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules

@@ -1,12 +1,12 @@
 import mysql
 from bs4 import BeautifulSoup
 
-import creating_connection
-import getting_topic_information
-import getting_web_page
 import option
 import settings
-import stochastic_waiting
+from crawl import creating_connection
+from crawl import getting_topic_information
+from crawl import getting_web_page
+from crawl import stochastic_waiting
 
 args = option.Parse()
 config = settings.Read(args['config'])
@@ -66,5 +66,8 @@ def get(start_page: int, end_page: int):
 
     for index, topic_id in enumerate(new_topic_ids, start=1):
         print(f'正在获取 topic:{topic_id} 内容 ({index}/{len(new_topic_ids)})')
-        getting_topic_information.get(topic_id, 0)
+        try:
+            getting_topic_information.get(topic_id, 0)
+        except Exception as e:
+            print(f"处理 topic:{topic_id} 时发生错误: {e}")
         stochastic_waiting.sleep()

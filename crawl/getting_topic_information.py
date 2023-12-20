@@ -1,13 +1,14 @@
+import random
 import re
 
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-import creating_connection
-import getting_web_page
 import option
 import settings
-from defining_items import Topics, Replies
+from crawl import creating_connection
+from crawl import getting_web_page
+from crawl.defining_items import Topics, Replies
 
 args = option.Parse()
 config = settings.Read(args['config'])
@@ -65,8 +66,10 @@ def get_question_info(soup: BeautifulSoup, topic_id: str, debug: int):
     # 主题
     topic_category = soup.find('a', href=re.compile('/go/')).text.strip()
     # 标签1~4
-    tags = soup.find_all('a', class_='tag')
-    tags = [tag.get_text(strip=True) for tag in tags]
+    tags_elements = soup.find_all('a', class_='tag')
+    tags = [tag.get_text(strip=True) for tag in tags_elements]
+    while len(tags) < 4:
+        tags.append(None)
 
     if debug:
         # 打印提取的信息
@@ -127,7 +130,7 @@ def get_replies_info(soup: BeautifulSoup, topic_id: str, number_of_replies: int,
         if cell.find('strong') and cell.find('strong').find('a'):
             floor_count += 1  # 仅对实际的回复增加楼层数
 
-            if floor_count > number_of_replies:
+            if floor_count > int(number_of_replies):
                 break  # 如果达到指定的回复数量，则停止遍历
 
             # 回复者ID
@@ -168,9 +171,10 @@ def get_replies_info(soup: BeautifulSoup, topic_id: str, number_of_replies: int,
     # return replies
 
 
-
 def get(topic_id: str, debug: int):
-    page_url = f'https://v2ex.com/t/{topic_id}'
+    allowed_domains = ['v2ex.com', 'jp.v2ex.com', 's.v2ex.com']
+    selected_domain = random.choice(allowed_domains)
+    page_url = f'https://{selected_domain}/t/{topic_id}'
     page_content = getting_web_page.get(page_url, config['cookie'])
 
     if page_content:
@@ -181,7 +185,6 @@ def get(topic_id: str, debug: int):
 
         # 获取回复者信息
         get_replies_info(soup, topic_id, number_of_replies, debug)
-
 
 # 调试
 # get('1000000', 1)

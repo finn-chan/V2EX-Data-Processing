@@ -23,7 +23,7 @@ def convert_to_mysql_datetime(datetime_str):
 
 class V2exSpider(scrapy.Spider):
     name = 'v2ex'
-    allowed_domains = ['v2ex.com']
+    allowed_domains = ['v2ex.com', 'jp.v2ex.com', 's.v2ex.com']
 
     def __init__(self, topic_id=None, *args, **kwargs):
         super(V2exSpider, self).__init__(*args, **kwargs)
@@ -52,8 +52,6 @@ class V2exSpider(scrapy.Spider):
             yield scrapy.Request(url, headers=headers, callback=self.parse)
 
     def parse(self, response):
-
-        # item = V2exProjectItem()
 
         # 话题ID
         topic_id = response.url.split('/')[-1]
@@ -99,21 +97,19 @@ class V2exSpider(scrapy.Spider):
         # 标签
         tags = response.css('a.tag::text').getall()
 
-        # 构建数据字典
-        topic_data = {
-            'topic_id': topic_id,
-            'op_id': op_id,
-            'topic_header': topic_header,
-            'topic_content': topic_content,
-            'question_time': question_time,
-            'number_of_clicks': number_of_clicks,
-            'number_of_replies': number_of_replies,
-            'last_reply_time': last_reply_time if last_reply_time else None,
-            'up_vote_topic': up_vote_topic,
-            'down_vote_topic': down_vote_topic,
-            'topic_category': topic_category,
-            'tags': tags if tags else []
-        }
+        item = V2exProjectItem()
+        item['topic_id'] = topic_id
+        item['op_id'] = op_id
+        item['topic_header'] = topic_header
+        item['topic_content'] = topic_content
+        item['question_time'] = question_time
+        item['number_of_clicks'] = number_of_clicks
+        item['number_of_replies'] = number_of_replies
+        item['last_reply_time'] = last_reply_time if last_reply_time else None
+        item['up_vote_topic'] = up_vote_topic
+        item['down_vote_topic'] = down_vote_topic
+        item['topic_category'] = topic_category
+        item['tags'] = tags if tags else []
 
         # 打印提取的信息
         print(f'话题ID: {topic_id}')
@@ -130,4 +126,4 @@ class V2exSpider(scrapy.Spider):
         for i, tag in enumerate(tags, 1):
             print(f'标签 {i}: {tag}')
 
-        yield topic_data
+        yield item
