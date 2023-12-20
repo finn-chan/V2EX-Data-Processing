@@ -2,7 +2,7 @@ import getting_topic_id
 
 
 def main():
-    getting_topic_id.get(20, 40)
+    getting_topic_id.get(40, 60)
 
 
 if __name__ == '__main__':

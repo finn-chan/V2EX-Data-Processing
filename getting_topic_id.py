@@ -66,5 +66,8 @@ def get(start_page: int, end_page: int):
 
     for index, topic_id in enumerate(new_topic_ids, start=1):
         print(f'正在获取 topic:{topic_id} 内容 ({index}/{len(new_topic_ids)})')
-        getting_topic_information.get(topic_id, 0)
+        try:
+            getting_topic_information.get(topic_id, 0)
+        except Exception as e:
+            print(f"处理 topic:{topic_id} 时发生错误: {e}")
         stochastic_waiting.sleep()
