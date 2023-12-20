@@ -6,7 +6,16 @@
 import scrapy
 
 
-class V2ExProjectItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class V2exProjectItem(scrapy.Item):
+    topic_id = scrapy.Field()
+    op_id = scrapy.Field()
+    topic_header = scrapy.Field()
+    topic_content = scrapy.Field()
+    question_time = scrapy.Field()
+    number_of_clicks = scrapy.Field()
+    number_of_replies = scrapy.Field()
+    last_reply_time = scrapy.Field()
+    up_vote_topic = scrapy.Field()
+    down_vote_topic = scrapy.Field()
+    topic_category = scrapy.Field()
+    tags = scrapy.Field()

@@ -1,4 +1,4 @@
-LOG_LEVEL = 'WARNING'
+LOG_LEVEL = 'DEBUG'
 
 # Scrapy settings for v2ex_project project
 #
@@ -63,9 +63,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    "v2ex_project.pipelines.V2ExProjectPipeline": 300,
-# }
+ITEM_PIPELINES = {
+    "v2ex_project.pipelines.V2exProjectPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

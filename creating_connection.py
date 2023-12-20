@@ -3,7 +3,7 @@ from mysql.connector import Error
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import defining_model_topics
+import defining_items
 import option
 import settings
 
@@ -34,7 +34,7 @@ def create_with_orm():
         echo=False)
 
     # 创建表（如果尚不存在）
-    defining_model_topics.Base.metadata.create_all(engine)
+    defining_items.Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
 
     return Session()
