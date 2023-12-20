@@ -1,5 +1,4 @@
 import re
-from datetime import datetime
 
 from bs4 import BeautifulSoup
 from dateutil import parser
@@ -8,7 +7,7 @@ import creating_connection
 import getting_web_page
 import option
 import settings
-from defining_items import Topics
+from defining_items import Topics, Replies
 
 args = option.Parse()
 config = settings.Read(args['config'])
@@ -120,48 +119,54 @@ def get_replies_info(soup: BeautifulSoup, topic_id: str, number_of_replies: int,
     reply_cells = soup.find_all('div', class_='cell')
     floor_count = 0  # 初始化楼层数计数器
 
+    # 创建数据库会话
+    session = creating_connection.create_with_orm()
+
     for cell in reply_cells:
         # 检查是否为实际的回复单元
         if cell.find('strong') and cell.find('strong').find('a'):
             floor_count += 1  # 仅对实际的回复增加楼层数
 
-            # 获取每个回复的唯一标识符
-            reply_id = cell.get('id')
-            if reply_id:
-                # 回复者ID
-                reply_user = cell.find('strong').find('a')['href'].split('/')[-1]
-                # 回复内容
-                reply_content = cell.find('div', class_='reply_content').get_text(strip=True)
-                # 回复时间
-                reply_time = cell.find('span', class_='ago').get('title')
-                reply_time = convert_to_mysql_datetime(reply_time)
-                # 感谢数
-                number_of_thanks = cell.find('span', class_='small').get_text(strip=True) if cell.find('span',
-                                                                                                       class_='small') else '0'
-                # 是否楼主
-                is_it_op = True if cell.find('div', class_='badge') else False
-
-                reply = {
-                    'reply_id': reply_user,
-                    'topic_id': topic_id,
-                    'floor': floor_count,
-                    'reply_content': reply_content,
-                    'reply_time': reply_time,
-                    'number_of_thanks': number_of_thanks,
-                    'is_it_op': is_it_op
-                }
-
-                replies.append(reply)
-
-            if floor_count >= number_of_replies:
+            if floor_count > number_of_replies:
                 break  # 如果达到指定的回复数量，则停止遍历
+
+            # 回复者ID
+            reply_user = cell.find('strong').find('a')['href'].split('/')[-1]
+            # 回复内容
+            reply_content = cell.find('div', class_='reply_content').get_text(strip=True)
+            # 回复时间
+            reply_time = cell.find('span', class_='ago').get('title')
+            reply_time = convert_to_mysql_datetime(reply_time)
+            # 感谢数
+            number_of_thanks = cell.find('span', class_='small').get_text(strip=True) if cell.find('span',
+                                                                                                   class_='small') else '0'
+            # 是否楼主
+            is_it_op = True if cell.find('div', class_='badge') else False
+
+            # 创建回复对象
+            new_reply = Replies(
+                reply_id=reply_user,
+                topic_id=topic_id,
+                floor=floor_count,
+                reply_content=reply_content,
+                reply_time=reply_time,
+                number_of_thanks=number_of_thanks,
+                is_it_op=is_it_op
+            )
+            session.merge(new_reply)
+
+            replies.append(new_reply)
+
+    # 提交数据库会话
+    session.commit()
 
     if debug:
         for reply in replies:
             print(
-                f"回复者ID: {reply['reply_id']}, 话题ID: {reply['topic_id']}, 楼层: {reply['floor']}, 回复内容: {reply['reply_content']}, 回复时间: {reply['reply_time']}, 感谢数: {reply['number_of_thanks']}, 是否楼主: {reply['is_it_op']}")
+                f"回复者ID: {reply.reply_id}, 话题ID: {reply.topic_id}, 楼层: {reply.floor}, 回复内容: {reply.reply_content}, 回复时间: {reply.reply_time}, 感谢数: {reply.number_of_thanks}, 是否楼主: {reply.is_it_op}")
 
-    return replies
+    # return replies
+
 
 
 def get(topic_id: str, debug: int):
@@ -179,4 +184,4 @@ def get(topic_id: str, debug: int):
 
 
 # 调试
-get('1001915', 1)
+# get('1000000', 1)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean, asc
 from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
@@ -24,7 +24,8 @@ class Topics(Base):
     tag_3 = Column(String(20))
     tag_4 = Column(String(20))
 
-    replies = relationship("Replies", order_by="Replies.floor", back_populates="topic")
+    # 定义与 Replies 的关系，并按照 topic_id 和 floor 排序
+    replies = relationship("Replies", order_by=[asc("Replies.topic_id"), asc("Replies.floor")], back_populates="topic")
 
     def __repr__(self):
         return f"<Topics(topic_id={self.topic_id}, op_id='{self.op_id}', topic_header='{self.topic_header[:10]}...', topic_content='{self.topic_content[:20]}...', question_time='{self.question_time}', number_of_clicks={self.number_of_clicks}, number_of_replies={self.number_of_replies}, last_reply_time='{self.last_reply_time}', up_vote_topic={self.up_vote_topic}, down_vote_topic={self.down_vote_topic}, topic_category='{self.topic_category}', tag_1='{self.tag_1}', tag_2='{self.tag_2}', tag_3='{self.tag_3}', tag_4='{self.tag_4}')>"
@@ -33,9 +34,10 @@ class Topics(Base):
 class Replies(Base):
     __tablename__ = 'replies'
 
+    # 使用 topic_id, reply_id 和 floor 作为复合主键
+    topic_id = Column(Integer, ForeignKey('topics.topic_id'), primary_key=True)
     reply_id = Column(String(20), primary_key=True)
-    topic_id = Column(Integer, ForeignKey('topics.topic_id'))
-    floor = Column(Integer)
+    floor = Column(Integer, primary_key=True)
     reply_content = Column(Text)
     reply_time = Column(DateTime)
     number_of_thanks = Column(Integer)
