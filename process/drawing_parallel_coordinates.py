@@ -26,7 +26,8 @@ def draw():
     # 关闭会话
     session.close()
 
-    # 使用 PrettyTable 输出前10个话题的信息
+    # 打印前10个话题的信息
+    print('前10个活跃话题的信息')
     table = PrettyTable()
     table.field_names = ['话题ID', '回复数', '点击数', '感谢数']
     for item in query_result[:10]:
@@ -35,9 +36,6 @@ def draw():
 
     # 转换为 Pandas DataFrame 用于绘制平行坐标图
     df = pd.DataFrame(query_result, columns=['topic_id', 'number_of_replies', 'number_of_clicks', 'number_of_thanks'])
-
-    # 检查数据
-    print(df.head())
 
     # 确保数据类型正确
     df['number_of_thanks'] = df['number_of_thanks'].astype(float)
