@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import squarify
 from sqlalchemy import func
+from matplotlib import cm
 
 from crawl import creating_connection
 from crawl.defining_items import Topics
@@ -39,9 +40,13 @@ def draw():
     sizes = df_filtered['topic_count']
     labels = df_filtered.apply(lambda x: f"{x['category']} {x['topic_count']}", axis=1)
 
+    # 根据大小生成颜色映射
+    norm = plt.Normalize(min(sizes), max(sizes))
+    colors = [cm.Reds(norm(size)) for size in sizes]
+
     # 绘制树形图
     plt.figure(figsize=(12, 8))
-    squarify.plot(sizes=sizes, label=labels, alpha=0.8)
+    squarify.plot(sizes=sizes, label=labels, alpha=0.8, color=colors)
     plt.axis('off')
     plt.title('V2EX 各类别话题数量树形图')
     plt.show()

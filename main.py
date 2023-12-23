@@ -18,7 +18,7 @@ def main():
     drawing_treemap.draw()
     # 绘制雷达图
     drawing_radar_chart.draw()
-    # 平行坐标图
+    # 绘制平行坐标图
     drawing_parallel_coordinates.draw()
     # 生成词云图
     creating_wordcloud.create()

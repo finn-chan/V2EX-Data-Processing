@@ -45,6 +45,7 @@ def draw():
     top_active_users = df.nlargest(10, 'total_activity')
 
     # 打印前10位活跃用户的信息
+    print('前10位活跃用户的信息')
     table = PrettyTable()
     table.field_names = ['用户ID', '发帖数', '收到回复数', '点赞数', '回复数', '感谢数']
     for idx, user in top_active_users.iterrows():
@@ -52,8 +53,6 @@ def draw():
         table.add_row(
             [user_id, user['post_count'], user['total_replies_received'], user['total_up_votes'], user['reply_count'],
              user['total_thanks_received']])
-
-    print('前10位活跃用户的信息：')
 
     print(table)
     # 选择前5个活跃用户进行雷达图展示
