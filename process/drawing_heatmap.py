@@ -39,7 +39,7 @@ def draw():
     df['total_activity'] = df['topic_count'] + df['reply_count']
 
     # 设置中文字体
-    font = FontProperties(fname=r"C:\Windows\Fonts\simsun.ttc", size=14)
+    font = FontProperties(fname=r'C:\Windows\Fonts\simsun.ttc', size=14)
 
     # 创建颜色映射
     cmap = LinearSegmentedColormap.from_list('activity_cmap', ['blue', 'red'])
@@ -50,15 +50,15 @@ def draw():
                 alpha=0.6, edgecolors='w')
     cbar = plt.colorbar(label='活跃度')
     cbar.ax.set_ylabel('活跃度', fontproperties=font)
-    plt.title("论坛每小时活跃度热力图", fontproperties=font)
-    plt.ylabel("时间", fontproperties=font)
-    plt.xlabel("活跃度", fontproperties=font)
+    plt.title('V2EX 每小时活跃度热力图', fontproperties=font)
+    plt.ylabel('时间', fontproperties=font)
+    plt.xlabel('活跃度', fontproperties=font)
     plt.yticks(range(24), [f'{23 - i:02d}:00' for i in range(24)])
     plt.grid(True)
 
     # 调整边界可视范围
     x_margin = 500
-    y_margin = 1
+    y_margin = 2.5
     plt.xlim([df['total_activity'].min() - x_margin, df['total_activity'].max() + x_margin])
     plt.ylim([-y_margin, 24 + y_margin])
 

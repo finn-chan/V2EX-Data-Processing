@@ -187,4 +187,4 @@ def get(topic_id: str, debug: int):
         get_replies_info(soup, topic_id, number_of_replies, debug)
 
 # 调试
-# get('1000000', 1)
+# get('1000714', 1)
