@@ -23,20 +23,20 @@ def create():
     session.close()
 
     # 合并文本数据
-    text_data = " ".join([f"{topic[0]} {topic[1]}" for topic in topics_data] +
+    text_data = ' '.join([f'{topic[0]} {topic[1]}' for topic in topics_data] +
                          [reply[0] for reply in replies_data if reply[0]])
 
     # 提取中文关键词
-    keywords = " ".join(jieba.analyse.extract_tags(text_data, topK=100))
+    keywords = ' '.join(jieba.analyse.extract_tags(text_data, topK=100))
 
     # 合并中英文文本
-    combined_text = text_data + " " + keywords
+    combined_text = text_data + ' ' + keywords
 
     # 添加中文停用词
     stopwords = set(STOPWORDS)
     stopwords.update(
-        ["的", "了", "和", "是", "就", "都", "而", "及", "与", "着", "或", "一个", "没有", "我们", "你们", "他们",
-         "它们"])
+        ['的', '了', '和', '是', '就', '都', '而', '及', '与', '着', '或', '一个', '没有', '我们', '你们', '他们',
+         '它们', 'https'])
 
     # 加载 logo 图片作为蒙版
     logo_mask = np.array(Image.open('v2ex.png'))
